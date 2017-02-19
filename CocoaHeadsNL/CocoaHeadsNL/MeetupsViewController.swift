@@ -17,7 +17,7 @@ class MeetupsViewController: UITableViewController, UIViewControllerPreviewingDe
 
     let realm = try! Realm()
 
-    var meetupsArray = try! Realm().objects(Meetup.self).sorted(byProperty: "time", ascending: false)
+    var meetupsArray = try! Realm().objects(Meetup.self).sorted(byKeyPath: "time", ascending: false)
     var meetupsByYear: [String: [Meetup]] {
         get {
             // I am assuming ordering stays correct due to FIFO behavior.
@@ -55,17 +55,17 @@ class MeetupsViewController: UITableViewController, UIViewControllerPreviewingDe
         }
     }
     
-    private var sectionTitles: [String] {
+    fileprivate var sectionTitles: [String] {
         get {
             return meetupsByYear.keys.sorted().reversed()
         }
     }
     
-    private func meetups(forSection section: Int) -> [Meetup] {
+    fileprivate func meetups(forSection section: Int) -> [Meetup] {
         return meetupsByYear[sectionTitles[section]]!
     }
     
-    private func meetup(for indexPath: IndexPath) -> Meetup {
+    fileprivate func meetup(for indexPath: IndexPath) -> Meetup {
         return meetups(forSection: indexPath.section)[indexPath.row]
     }
     
@@ -87,7 +87,7 @@ class MeetupsViewController: UITableViewController, UIViewControllerPreviewingDe
         let nib = UINib(nibName: "MeetupCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: MeetupCell.Identifier)
 
-        let backItem = UIBarButtonItem(title: "Events", style: .plain, target: nil, action: nil)
+        let backItem = UIBarButtonItem(title: NSLocalizedString("Events"), style: .plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem = backItem
 
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Banner")!)
@@ -235,7 +235,7 @@ class MeetupsViewController: UITableViewController, UIViewControllerPreviewingDe
 
         let info = CKNotificationInfo()
 
-        info.alertBody = "New meetup has been added!"
+        info.alertBody = NSLocalizedString("New meetup has been added!")
         info.shouldBadge = true
 
         subscription.notificationInfo = info
@@ -412,10 +412,7 @@ class MeetupsViewController: UITableViewController, UIViewControllerPreviewingDe
         operation.queryCompletionBlock = { [weak self] (cursor, error) in
             DispatchQueue.main.async {
                 guard error == nil else {
-                    let ac = UIAlertController(
-                        title: "Fetch failed",
-                        message: "There was a problem fetching the list of meetups; please try again: \(error!.localizedDescription)", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    let ac = UIAlertController.fetchErrorDialog(whileFetching: NSLocalizedString("meetups"), error: error!)
                     self?.present(ac, animated: true, completion: nil)
                     return
                 }
