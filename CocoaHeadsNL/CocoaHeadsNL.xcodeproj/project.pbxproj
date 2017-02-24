@@ -43,6 +43,7 @@
 		F1A46D211AAB50BB00585D61 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1A46D201AAB50BB00585D61 /* Images.xcassets */; };
 		F1A46D241AAB50BB00585D61 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1A46D221AAB50BB00585D61 /* LaunchScreen.xib */; };
 		F1A46D3D1AAB516300585D61 /* JobsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A46D3C1AAB516300585D61 /* JobsViewController.swift */; };
+		F1B5ECFB1E60D83500BCD5D1 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F1B5ECF91E60D83500BCD5D1 /* DataModel.xcdatamodeld */; };
 		F1BDEA751C920768004C7DAB /* JobsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BDEA731C920768004C7DAB /* JobsCell.swift */; };
 		F1BDEA761C920768004C7DAB /* JobsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1BDEA741C920768004C7DAB /* JobsCell.xib */; };
 		F1CF120F1B8A0C0600EBCABC /* CoreLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CF120E1B8A0C0600EBCABC /* CoreLocationController.swift */; };
@@ -106,6 +107,7 @@
 		F1A46D2E1AAB50BB00585D61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1A46D2F1AAB50BB00585D61 /* CocoaHeadsNLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaHeadsNLTests.swift; sourceTree = "<group>"; };
 		F1A46D3C1AAB516300585D61 /* JobsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = JobsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F1B5ECFA1E60D83500BCD5D1 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		F1BDEA731C920768004C7DAB /* JobsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobsCell.swift; sourceTree = "<group>"; };
 		F1BDEA741C920768004C7DAB /* JobsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JobsCell.xib; sourceTree = "<group>"; };
 		F1CF120E1B8A0C0600EBCABC /* CoreLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocationController.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 		F1A46D091AAB50BB00585D61 = {
 			isa = PBXGroup;
 			children = (
+				F1B5ECF91E60D83500BCD5D1 /* DataModel.xcdatamodeld */,
 				F1A46D141AAB50BB00585D61 /* CocoaHeadsNL */,
 				F1A46D2C1AAB50BB00585D61 /* CocoaHeadsNLTests */,
 				4AEDD5211CF635E50039AAE5 /* CocoaHeadsNLUITests */,
@@ -629,6 +632,7 @@
 				239D41161B190FD000609105 /* CalendarTabImage.swift in Sources */,
 				F11455B91AB4BA0600546D22 /* DetailViewController.swift in Sources */,
 				7B6A744F1B162F8E00A10762 /* UIColor+Extensions.swift in Sources */,
+				F1B5ECFB1E60D83500BCD5D1 /* DataModel.xcdatamodeld in Sources */,
 				7B6A74491B1452FD00A10762 /* MeetupsViewController.swift in Sources */,
 				F1A46D3D1AAB516300585D61 /* JobsViewController.swift in Sources */,
 				4ABB70F71D9CED8B00CDE5B8 /* ButtonCell.swift in Sources */,
@@ -907,6 +911,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F1B5ECF91E60D83500BCD5D1 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F1B5ECFA1E60D83500BCD5D1 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = F1B5ECFA1E60D83500BCD5D1 /* DataModel.xcdatamodel */;
+			name = DataModel.xcdatamodeld;
+			path = CocoaHeadsNL/DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F1A46D0A1AAB50BB00585D61 /* Project object */;
 }
