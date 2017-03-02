@@ -9,6 +9,7 @@
 import UIKit
 import CoreSpotlight
 import CloudKit
+import UserNotifications
 
 import Fabric
 import Crashlytics
@@ -17,7 +18,7 @@ let searchNotificationName = "CocoaHeadsNLSpotLightSearchOccured"
 let searchPasteboardName = "CocoaHeadsNL-searchInfo-pasteboard"
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -38,7 +39,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-
+        
+        if #available(iOS 10.0, *) {
+            let subscription = CKQuerySubscription(recordType: "GlobalNotification", predicate: NSPredicate(format: "TRUEPREDICATE"), options: .firesOnRecordCreation)
+            let info = CKNotificationInfo()
+            info.alertBody = "A new notification has been posted!"
+            info.shouldBadge = true
+            info.soundName = "default"
+            
+            subscription.notificationInfo = info
+            
+            CKContainer.default().publicCloudDatabase.save(subscription, completionHandler: { subscription, error in
+                if error == nil {
+                    // Subscription saved successfully
+                } else {
+                    // An error occurred
+                }
+            })
+        } else {
+            // Fallback on earlier versions
+        }
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
@@ -62,17 +82,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
     }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound])
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Fabric.with([Crashlytics.self])
 
-        let notificationTypes: UIUserNotificationType = [.alert, .badge, .sound]
-
-        let settings = UIUserNotificationSettings(types: notificationTypes, categories: nil)
-        application.registerUserNotificationSettings(settings)
-        application.registerForRemoteNotifications()
-
+        
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound], completionHandler: { authorized, error in
+                if authorized {
+                    application.registerForRemoteNotifications()
+                }
+            })
+        } else {
+            // Fallback on earlier versions
+            let notificationTypes: UIUserNotificationType = [.alert, .badge, .sound]
+            
+            let settings = UIUserNotificationSettings(types: notificationTypes, categories: nil)
+            application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
+        }
+        
         return true
+        
     }
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
